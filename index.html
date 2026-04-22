@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iPerf Reloaded — Privacy & Support</title>
+<style>
+  :root {
+    --bg: #0a1628;
+    --bg-2: #003050;
+    --text: #e6f4ff;
+    --muted: #94a8bd;
+    --accent: #00dcdc;
+    --card: rgba(255,255,255,0.05);
+    --border: rgba(255,255,255,0.08);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: linear-gradient(160deg, var(--bg), var(--bg-2));
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
+  header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 8px;
+  }
+  header .mark {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: radial-gradient(circle at 30% 30%, #00dcdc, #006070);
+    display: grid; place-items: center;
+    font-size: 30px; color: #0a1628;
+    box-shadow: 0 8px 24px rgba(0, 220, 220, .25);
+  }
+  h1 { font-size: 28px; margin: 0; }
+  .tagline { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  h2 { margin-top: 40px; font-size: 20px; color: var(--accent); }
+  h3 { margin-top: 24px; font-size: 16px; color: var(--text); }
+  p, li { color: #d8e7f5; }
+  a { color: var(--accent); }
+  section.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 22px;
+    margin-top: 24px;
+  }
+  .muted { color: var(--muted); font-size: 13px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 48px; }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <div class="mark">⚡</div>
+  <div>
+    <h1>iPerf Reloaded</h1>
+    <div class="tagline">Network speed test with iPerf3</div>
+  </div>
+</header>
+
+<section class="card">
+  <h2 id="privacy">Privacy Policy</h2>
+  <p class="muted">Effective date: April 22, 2026</p>
+
+  <p>iPerf Reloaded (the "App") is committed to protecting your privacy. This policy explains what data the App does and does not collect.</p>
+
+  <h3>Data we collect</h3>
+  <p><strong>None.</strong> iPerf Reloaded does not collect, transmit, store, or share any personal data with the developer or any third party. There are no accounts, no analytics SDKs, no advertising SDKs, and no crash-reporting services.</p>
+
+  <h3>Data stored on your device</h3>
+  <p>The App stores the following locally on your device only, using Apple's standard <code>UserDefaults</code> storage:</p>
+  <ul>
+    <li>Your most recently used iPerf3 server address and port (so you don't have to re-enter them)</li>
+    <li>Your saved test-run history (durations, throughput samples, timestamps)</li>
+    <li>Your theme preference (light / dark / system)</li>
+  </ul>
+  <p>This data never leaves your device. Deleting the App removes all of it.</p>
+
+  <h3>Network activity</h3>
+  <p>When you start a test, the App connects to the iPerf3 server address you enter. This connection is strictly between your device and that server, which you control. No other network requests are made by the App.</p>
+
+  <h3>Children</h3>
+  <p>The App is rated 4+ and does not knowingly collect any data from anyone, including children.</p>
+
+  <h3>Changes to this policy</h3>
+  <p>If this policy changes, the updated version will be published at this URL with a new effective date.</p>
+
+  <h3>Contact</h3>
+  <p>Questions about privacy? Email: <a href="mailto:j.vreitzenstein@gmail.com">j.vreitzenstein@gmail.com</a></p>
+</section>
+
+<hr>
+
+<section class="card">
+  <h2 id="support">Support</h2>
+
+  <h3>Getting started</h3>
+  <p>iPerf Reloaded measures real throughput between your iPhone / iPad and an iPerf3 server on your network. You need to run an iPerf3 server somewhere reachable from your device.</p>
+  <p>Quickest way — on a Mac / Linux / Windows (via WSL) machine on the same network:</p>
+  <p><code>iperf3 -s</code></p>
+  <p>Then enter that machine's IP address in the App and tap <em>Start Speed Test</em>.</p>
+  <p>If you don't have your own server, public iPerf3 servers exist — a directory is available at <a href="https://iperf3serverlist.net" target="_blank" rel="noopener">iperf3serverlist.net</a>.</p>
+
+  <h3>FAQ</h3>
+  <p><strong>Why is my result lower than my advertised internet speed?</strong><br>
+  iPerf measures the link between your device and your chosen server. If your server is your router or a local machine, the result reflects your Wi-Fi / LAN — not your ISP connection. That is the point of the tool.</p>
+
+  <p><strong>Does it work over cellular?</strong><br>
+  Yes, as long as the iPerf3 server is reachable from your device.</p>
+
+  <p><strong>Why does the test fail to connect?</strong><br>
+  Most commonly: the server isn't running, a firewall is blocking port 5201, or the IP is wrong. Verify with <code>iperf3 -c &lt;ip&gt;</code> from another machine first.</p>
+
+  <h3>Contact</h3>
+  <p>Bug reports or questions: <a href="mailto:j.vreitzenstein@gmail.com">j.vreitzenstein@gmail.com</a></p>
+</section>
+
+<footer>
+  © 2026 Johannes von Reitzenstein · iPerf Reloaded
+</footer>
+
+</main>
+</body>
+</html>
