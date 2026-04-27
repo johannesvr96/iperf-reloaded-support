@@ -29,19 +29,37 @@
     padding: 48px 24px 64px;
   }
   header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .header-left {
     display: flex; align-items: center; gap: 14px;
-    margin-bottom: 8px;
   }
   header .mark {
     width: 56px; height: 56px;
     border-radius: 14px;
-    background: radial-gradient(circle at 30% 30%, #00dcdc, #006070);
-    display: grid; place-items: center;
-    font-size: 30px; color: #0a1628;
-    box-shadow: 0 8px 24px rgba(0, 220, 220, .25);
+    background: url('app-icon.png') center/cover no-repeat;
+    display: block;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
   }
   h1 { font-size: 28px; margin: 0; }
   .tagline { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  .lang-switch {
+    display: flex; gap: 8px;
+  }
+  .lang-switch button {
+    background: var(--card); border: 1px solid var(--border); color: var(--muted);
+    border-radius: 8px; padding: 6px 14px; cursor: pointer; font-size: 14px;
+    transition: all 0.2s;
+  }
+  .lang-switch button:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .lang-switch button.active {
+    background: rgba(0, 220, 220, 0.1); border-color: var(--accent); color: var(--accent);
+  }
   h2 { margin-top: 40px; font-size: 20px; color: var(--accent); }
   h3 { margin-top: 24px; font-size: 16px; color: var(--text); }
   p, li { color: #d8e7f5; }
@@ -57,20 +75,46 @@
   hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
   footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 48px; }
 </style>
+<script>
+  function setLang(lang) {
+    document.querySelectorAll('.lang-en, .lang-de').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.lang-' + lang).forEach(el => el.style.display = '');
+    document.querySelectorAll('.lang-switch button').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('btn-' + lang).classList.add('active');
+    document.documentElement.lang = lang;
+  }
+  
+  // Auto-detect language or use default 'en'
+  window.addEventListener('DOMContentLoaded', () => {
+    const userLang = navigator.language || navigator.userLanguage;
+    if (userLang.startsWith('de')) {
+      setLang('de');
+    } else {
+      setLang('en');
+    }
+  });
+</script>
 </head>
 <body>
 <main>
 
 <header>
-  <div class="mark">⚡</div>
-  <div>
-    <h1>iPerf Reloaded</h1>
-    <div class="tagline">Network speed test with iPerf3</div>
+  <div class="header-left">
+    <div class="mark"></div>
+    <div>
+      <h1>iPerf Reloaded</h1>
+      <div class="tagline lang-en">Network speed test with iPerf3</div>
+      <div class="tagline lang-de" style="display: none;">Netzwerk-Geschwindigkeitstest mit iPerf3</div>
+    </div>
+  </div>
+  <div class="lang-switch">
+    <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+    <button id="btn-de" onclick="setLang('de')">DE</button>
   </div>
 </header>
 
-<section class="card">
-  <h2 id="privacy">Privacy Policy</h2>
+<section class="card lang-en">
+  <h2 id="privacy-en">Privacy Policy</h2>
   <p class="muted">Effective date: April 22, 2026</p>
 
   <p>iPerf Reloaded (the "App") is committed to protecting your privacy. This policy explains what data the App does and does not collect.</p>
@@ -100,10 +144,41 @@
   <p>Questions about privacy? Email: <a href="mailto:j.vreitzenstein@gmail.com">j.vreitzenstein@gmail.com</a></p>
 </section>
 
+<section class="card lang-de" style="display: none;">
+  <h2 id="privacy-de">Datenschutzerklärung</h2>
+  <p class="muted">Gültig ab: 22. April 2026</p>
+
+  <p>iPerf Reloaded (die "App") nimmt den Schutz Ihrer Daten ernst. Diese Richtlinie erklärt, welche Daten die App erfasst und welche nicht.</p>
+
+  <h3>Daten, die wir erfassen</h3>
+  <p><strong>Keine.</strong> iPerf Reloaded erfasst, überträgt, speichert oder teilt keine personenbezogenen Daten mit dem Entwickler oder Dritten. Es gibt keine Konten, keine Analyse-SDKs, keine Werbe-SDKs und keine Crash-Reporting-Dienste.</p>
+
+  <h3>Lokal gespeicherte Daten</h3>
+  <p>Die App speichert die folgenden Daten ausschließlich lokal auf Ihrem Gerät und verwendet dafür den Standard-Speicher von Apple (<code>UserDefaults</code>):</p>
+  <ul>
+    <li>Ihre zuletzt verwendete iPerf3-Serveradresse und Portnummer (damit Sie diese nicht erneut eingeben müssen)</li>
+    <li>Ihren gespeicherten Testverlauf (Dauer, Durchsatz-Werte, Zeitstempel)</li>
+    <li>Ihre Design-Einstellung (Hell / Dunkel / System)</li>
+  </ul>
+  <p>Diese Daten verlassen niemals Ihr Gerät. Wenn Sie die App löschen, werden alle Daten entfernt.</p>
+
+  <h3>Netzwerkaktivität</h3>
+  <p>Wenn Sie einen Test starten, verbindet sich die App mit der von Ihnen eingegebenen iPerf3-Serveradresse. Diese Verbindung findet ausschließlich zwischen Ihrem Gerät und dem von Ihnen kontrollierten Server statt. Es werden keine weiteren Netzwerkanfragen durch die App gestellt.</p>
+
+  <h3>Kinder</h3>
+  <p>Die App hat eine Altersfreigabe von 4+ und erfasst wissentlich keine Daten von Personen, einschließlich Kindern.</p>
+
+  <h3>Änderungen dieser Richtlinie</h3>
+  <p>Wenn sich diese Richtlinie ändert, wird die aktualisierte Version unter dieser URL mit einem neuen Datum veröffentlicht.</p>
+
+  <h3>Kontakt</h3>
+  <p>Fragen zum Datenschutz? E-Mail: <a href="mailto:j.vreitzenstein@gmail.com">j.vreitzenstein@gmail.com</a></p>
+</section>
+
 <hr>
 
-<section class="card">
-  <h2 id="support">Support</h2>
+<section class="card lang-en">
+  <h2 id="support-en">Support</h2>
 
   <h3>Getting started</h3>
   <p>iPerf Reloaded measures real throughput between your iPhone / iPad and an iPerf3 server on your network. You need to run an iPerf3 server somewhere reachable from your device.</p>
@@ -124,6 +199,30 @@
 
   <h3>Contact</h3>
   <p>Bug reports or questions: <a href="mailto:j.vreitzenstein@gmail.com">j.vreitzenstein@gmail.com</a></p>
+</section>
+
+<section class="card lang-de" style="display: none;">
+  <h2 id="support-de">Support</h2>
+
+  <h3>Erste Schritte</h3>
+  <p>iPerf Reloaded misst den tatsächlichen Durchsatz zwischen Ihrem iPhone / iPad und einem iPerf3-Server in Ihrem Netzwerk. Sie müssen einen iPerf3-Server betreiben, der von Ihrem Gerät aus erreichbar ist.</p>
+  <p>Der schnellste Weg – auf einem Mac / Linux / Windows (über WSL) Rechner im selben Netzwerk:</p>
+  <p><code>iperf3 -s</code></p>
+  <p>Geben Sie dann die IP-Adresse dieses Rechners in die App ein und tippen Sie auf <em>Start Speed Test</em>.</p>
+  <p>Wenn Sie keinen eigenen Server haben, gibt es öffentliche iPerf3-Server – ein Verzeichnis finden Sie unter <a href="https://iperf3serverlist.net" target="_blank" rel="noopener">iperf3serverlist.net</a>.</p>
+
+  <h3>Häufig gestellte Fragen (FAQ)</h3>
+  <p><strong>Warum ist mein Ergebnis niedriger als meine beworbene Internetgeschwindigkeit?</strong><br>
+  iPerf misst die Verbindung zwischen Ihrem Gerät und dem von Ihnen gewählten Server. Wenn Ihr Server Ihr Router oder ein lokaler Rechner ist, spiegelt das Ergebnis Ihr WLAN / LAN wider – nicht Ihre ISP-Verbindung. Das ist der Zweck dieses Tools.</p>
+
+  <p><strong>Funktioniert es über das Mobilfunknetz?</strong><br>
+  Ja, solange der iPerf3-Server von Ihrem Gerät aus erreichbar ist.</p>
+
+  <p><strong>Warum schlägt die Verbindung beim Test fehl?</strong><br>
+  Am häufigsten: Der Server läuft nicht, eine Firewall blockiert Port 5201, oder die IP ist falsch. Überprüfen Sie dies zuerst mit <code>iperf3 -c &lt;ip&gt;</code> von einem anderen Rechner aus.</p>
+
+  <h3>Kontakt</h3>
+  <p>Fehlerberichte oder Fragen: <a href="mailto:j.vreitzenstein@gmail.com">j.vreitzenstein@gmail.com</a></p>
 </section>
 
 <footer>
