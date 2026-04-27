@@ -4,98 +4,301 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>iPerf Reloaded — Privacy & Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a1628;
-    --bg-2: #003050;
-    --text: #e6f4ff;
-    --muted: #94a8bd;
-    --accent: #00dcdc;
-    --card: rgba(255,255,255,0.05);
-    --border: rgba(255,255,255,0.08);
+    --bg: #030816;
+    --bg-accent: #0a1931;
+    --text: #ffffff;
+    --muted: #8e9db0;
+    --accent: #00f2f2;
+    --card: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.1);
+    --glow: rgba(0, 242, 242, 0.15);
   }
-  * { box-sizing: border-box; }
+  
+  * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  
   html, body {
     margin: 0; padding: 0;
-    background: linear-gradient(160deg, var(--bg), var(--bg-2));
+    background-color: var(--bg);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     min-height: 100vh;
     line-height: 1.6;
+    overflow-x: hidden;
   }
+
+  /* Decorative background blobs */
+  .blob {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+    filter: blur(80px);
+    z-index: -1;
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  .blob-1 { top: -200px; right: -100px; }
+  .blob-2 { bottom: -200px; left: -100px; }
+
   main {
-    max-width: 760px;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 48px 24px 64px;
+    padding: 80px 24px 100px;
+    animation: fadeIn 0.8s ease-out;
   }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 60px;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 20px;
   }
+
   .header-left {
-    display: flex; align-items: center; gap: 14px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
   }
+
   header .mark {
-    width: 56px; height: 56px;
-    border-radius: 14px;
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
     background: url('app-icon.png') center/cover no-repeat;
     display: block;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--glow);
+    border: 1px solid rgba(255,255,255,0.1);
   }
-  h1 { font-size: 28px; margin: 0; }
-  .tagline { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+  h1 { 
+    font-size: 32px; 
+    font-weight: 700;
+    margin: 0; 
+    letter-spacing: -0.02em;
+    background: linear-gradient(to bottom, #fff, #b0b0b0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .tagline { 
+    color: var(--muted); 
+    font-size: 16px; 
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
   .lang-switch {
-    display: flex; gap: 8px;
+    display: flex;
+    background: var(--card);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
   }
+
   .lang-switch button {
-    background: var(--card); border: 1px solid var(--border); color: var(--muted);
-    border-radius: 8px; padding: 6px 14px; cursor: pointer; font-size: 14px;
-    transition: all 0.2s;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    border-radius: 8px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .lang-switch button:hover {
-    background: rgba(255,255,255,0.1);
+
+  .lang-switch button:hover:not(.active) {
+    color: var(--text);
+    background: rgba(255,255,255,0.05);
   }
+
   .lang-switch button.active {
-    background: rgba(0, 220, 220, 0.1); border-color: var(--accent); color: var(--accent);
+    background: var(--accent);
+    color: var(--bg);
+    box-shadow: 0 4px 12px var(--glow);
   }
-  h2 { margin-top: 40px; font-size: 20px; color: var(--accent); }
-  h3 { margin-top: 24px; font-size: 16px; color: var(--text); }
-  p, li { color: #d8e7f5; }
-  a { color: var(--accent); }
+
   section.card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px 22px;
-    margin-top: 24px;
-  }
-  .muted { color: var(--muted); font-size: 13px; }
-  hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
-  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 48px; }
-</style>
-<script>
-  function setLang(lang) {
-    document.querySelectorAll('.lang-en, .lang-de').forEach(el => el.style.display = 'none');
-    document.querySelectorAll('.lang-' + lang).forEach(el => el.style.display = '');
-    document.querySelectorAll('.lang-switch button').forEach(btn => btn.classList.remove('active'));
-    document.getElementById('btn-' + lang).classList.add('active');
-    document.documentElement.lang = lang;
+    border-radius: 24px;
+    padding: 40px;
+    margin-top: 32px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
   }
   
-  // Auto-detect language or use default 'en'
+  section.card:hover {
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  h2 { 
+    margin-top: 0; 
+    font-size: 24px; 
+    font-weight: 700;
+    color: var(--accent); 
+    letter-spacing: -0.01em;
+  }
+
+  h3 { 
+    margin-top: 32px; 
+    font-size: 18px; 
+    font-weight: 600;
+    color: var(--text); 
+  }
+
+  p, li { 
+    color: #cbd5e1; 
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.9em;
+    color: var(--accent);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  a { 
+    color: var(--accent); 
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  
+  a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  .muted { 
+    color: var(--muted); 
+    font-size: 14px; 
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  hr { 
+    border: none; 
+    border-top: 1px solid var(--border); 
+    margin: 80px 0; 
+  }
+
+  footer { 
+    color: var(--muted); 
+    font-size: 14px; 
+    text-align: center; 
+    margin-top: 80px;
+    font-weight: 300;
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+  
+  li {
+    margin-bottom: 12px;
+  }
+
+  /* Transition utility classes */
+  .fade-out {
+    opacity: 0 !important;
+    transform: translateY(-15px) scale(0.98) !important;
+  }
+  
+  @media (max-width: 600px) {
+    main { padding: 40px 20px; }
+    h1 { font-size: 26px; }
+    section.card { padding: 24px; }
+  }
+</style>
+<script>
+  let isTransitioning = false;
+
+  function setLang(lang) {
+    if (isTransitioning) return;
+    if (document.documentElement.lang === lang) return;
+    
+    isTransitioning = true;
+    const currentLang = document.documentElement.lang;
+    const currentElements = document.querySelectorAll('.lang-' + currentLang);
+    const nextElements = document.querySelectorAll('.lang-' + lang);
+    
+    // Update buttons
+    document.querySelectorAll('.lang-switch button').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('btn-' + lang).classList.add('active');
+
+    // Fade out current
+    currentElements.forEach(el => {
+      el.classList.add('fade-out');
+    });
+
+    setTimeout(() => {
+      // Hide current
+      currentElements.forEach(el => {
+        el.style.display = 'none';
+        el.classList.remove('fade-out');
+      });
+
+      // Show next but keep transparent/shifted
+      nextElements.forEach(el => {
+        el.style.display = '';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(15px) scale(0.98)';
+      });
+
+      // Force reflow
+      void document.body.offsetHeight;
+
+      // Fade in next
+      nextElements.forEach(el => {
+        el.style.transition = 'opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0) scale(1)';
+      });
+
+      document.documentElement.lang = lang;
+      
+      setTimeout(() => {
+        isTransitioning = false;
+      }, 500);
+    }, 400);
+  }
+  
   window.addEventListener('DOMContentLoaded', () => {
     const userLang = navigator.language || navigator.userLanguage;
-    if (userLang.startsWith('de')) {
-      setLang('de');
-    } else {
-      setLang('en');
-    }
+    const initialLang = userLang.startsWith('de') ? 'de' : 'en';
+    
+    document.documentElement.lang = initialLang;
+    document.querySelectorAll('.lang-en, .lang-de').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.lang-' + initialLang).forEach(el => el.style.display = '');
+    document.getElementById('btn-' + initialLang).classList.add('active');
   });
 </script>
 </head>
 <body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
 <main>
 
 <header>
@@ -108,14 +311,14 @@
     </div>
   </div>
   <div class="lang-switch">
-    <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
     <button id="btn-de" onclick="setLang('de')">DE</button>
   </div>
 </header>
 
 <section class="card lang-en">
   <h2 id="privacy-en">Privacy Policy</h2>
-  <p class="muted">Effective date: April 22, 2026</p>
+  <span class="muted">Effective date: April 22, 2026</span>
 
   <p>iPerf Reloaded (the "App") is committed to protecting your privacy. This policy explains what data the App does and does not collect.</p>
 
@@ -125,7 +328,7 @@
   <h3>Data stored on your device</h3>
   <p>The App stores the following locally on your device only, using Apple's standard <code>UserDefaults</code> storage:</p>
   <ul>
-    <li>Your most recently used iPerf3 server address and port (so you don't have to re-enter them)</li>
+    <li>Your most recently used iPerf3 server address and port</li>
     <li>Your saved test-run history (durations, throughput samples, timestamps)</li>
     <li>Your theme preference (light / dark / system)</li>
   </ul>
@@ -134,19 +337,13 @@
   <h3>Network activity</h3>
   <p>When you start a test, the App connects to the iPerf3 server address you enter. This connection is strictly between your device and that server, which you control. No other network requests are made by the App.</p>
 
-  <h3>Children</h3>
-  <p>The App is rated 4+ and does not knowingly collect any data from anyone, including children.</p>
-
-  <h3>Changes to this policy</h3>
-  <p>If this policy changes, the updated version will be published at this URL with a new effective date.</p>
-
   <h3>Contact</h3>
   <p>Questions about privacy? Email: <a href="mailto:j.vreitzenstein@gmail.com">j.vreitzenstein@gmail.com</a></p>
 </section>
 
 <section class="card lang-de" style="display: none;">
   <h2 id="privacy-de">Datenschutzerklärung</h2>
-  <p class="muted">Gültig ab: 22. April 2026</p>
+  <span class="muted">Gültig ab: 22. April 2026</span>
 
   <p>iPerf Reloaded (die "App") nimmt den Schutz Ihrer Daten ernst. Diese Richtlinie erklärt, welche Daten die App erfasst und welche nicht.</p>
 
@@ -154,22 +351,16 @@
   <p><strong>Keine.</strong> iPerf Reloaded erfasst, überträgt, speichert oder teilt keine personenbezogenen Daten mit dem Entwickler oder Dritten. Es gibt keine Konten, keine Analyse-SDKs, keine Werbe-SDKs und keine Crash-Reporting-Dienste.</p>
 
   <h3>Lokal gespeicherte Daten</h3>
-  <p>Die App speichert die folgenden Daten ausschließlich lokal auf Ihrem Gerät und verwendet dafür den Standard-Speicher von Apple (<code>UserDefaults</code>):</p>
+  <p>Die App speichert die folgenden Daten ausschließlich lokal auf Ihrem Gerät (<code>UserDefaults</code>):</p>
   <ul>
-    <li>Ihre zuletzt verwendete iPerf3-Serveradresse und Portnummer (damit Sie diese nicht erneut eingeben müssen)</li>
+    <li>Ihre zuletzt verwendete iPerf3-Serveradresse und Portnummer</li>
     <li>Ihren gespeicherten Testverlauf (Dauer, Durchsatz-Werte, Zeitstempel)</li>
     <li>Ihre Design-Einstellung (Hell / Dunkel / System)</li>
   </ul>
   <p>Diese Daten verlassen niemals Ihr Gerät. Wenn Sie die App löschen, werden alle Daten entfernt.</p>
 
   <h3>Netzwerkaktivität</h3>
-  <p>Wenn Sie einen Test starten, verbindet sich die App mit der von Ihnen eingegebenen iPerf3-Serveradresse. Diese Verbindung findet ausschließlich zwischen Ihrem Gerät und dem von Ihnen kontrollierten Server statt. Es werden keine weiteren Netzwerkanfragen durch die App gestellt.</p>
-
-  <h3>Kinder</h3>
-  <p>Die App hat eine Altersfreigabe von 4+ und erfasst wissentlich keine Daten von Personen, einschließlich Kindern.</p>
-
-  <h3>Änderungen dieser Richtlinie</h3>
-  <p>Wenn sich diese Richtlinie ändert, wird die aktualisierte Version unter dieser URL mit einem neuen Datum veröffentlicht.</p>
+  <p>Wenn Sie einen Test starten, verbindet sich die App mit der von Ihnen eingegebenen iPerf3-Serveradresse. Diese Verbindung findet ausschließlich zwischen Ihrem Gerät und dem von Ihnen kontrollierten Server statt.</p>
 
   <h3>Kontakt</h3>
   <p>Fragen zum Datenschutz? E-Mail: <a href="mailto:j.vreitzenstein@gmail.com">j.vreitzenstein@gmail.com</a></p>
@@ -181,18 +372,15 @@
   <h2 id="support-en">Support</h2>
 
   <h3>Getting started</h3>
-  <p>iPerf Reloaded measures real throughput between your iPhone / iPad and an iPerf3 server on your network. You need to run an iPerf3 server somewhere reachable from your device.</p>
-  <p>Quickest way — on a Mac / Linux / Windows (via WSL) machine on the same network:</p>
+  <p>iPerf Reloaded measures real throughput between your device and an iPerf3 server. You need to run an iPerf3 server somewhere reachable from your device.</p>
+  <p>Quickest way — on a Mac / Linux / Windows (via WSL) machine:</p>
   <p><code>iperf3 -s</code></p>
   <p>Then enter that machine's IP address in the App and tap <em>Start Speed Test</em>.</p>
-  <p>If you don't have your own server, public iPerf3 servers exist — a directory is available at <a href="https://iperf3serverlist.net" target="_blank" rel="noopener">iperf3serverlist.net</a>.</p>
+  <p>If you don't have your own server, public iPerf3 servers exist at <a href="https://iperf3serverlist.net" target="_blank" rel="noopener">iperf3serverlist.net</a>.</p>
 
   <h3>FAQ</h3>
-  <p><strong>Why is my result lower than my advertised internet speed?</strong><br>
-  iPerf measures the link between your device and your chosen server. If your server is your router or a local machine, the result reflects your Wi-Fi / LAN — not your ISP connection. That is the point of the tool.</p>
-
-  <p><strong>Does it work over cellular?</strong><br>
-  Yes, as long as the iPerf3 server is reachable from your device.</p>
+  <p><strong>Why is my result lower than my internet speed?</strong><br>
+  iPerf measures the link between your device and your chosen server. If your server is local, the result reflects your local network — not your ISP connection.</p>
 
   <p><strong>Why does the test fail to connect?</strong><br>
   Most commonly: the server isn't running, a firewall is blocking port 5201, or the IP is wrong. Verify with <code>iperf3 -c &lt;ip&gt;</code> from another machine first.</p>
@@ -205,21 +393,18 @@
   <h2 id="support-de">Support</h2>
 
   <h3>Erste Schritte</h3>
-  <p>iPerf Reloaded misst den tatsächlichen Durchsatz zwischen Ihrem iPhone / iPad und einem iPerf3-Server in Ihrem Netzwerk. Sie müssen einen iPerf3-Server betreiben, der von Ihrem Gerät aus erreichbar ist.</p>
-  <p>Der schnellste Weg – auf einem Mac / Linux / Windows (über WSL) Rechner im selben Netzwerk:</p>
+  <p>iPerf Reloaded misst den tatsächlichen Durchsatz zwischen Ihrem Gerät und einem iPerf3-Server. Sie müssen einen iPerf3-Server betreiben, der erreichbar ist.</p>
+  <p>Der schnellste Weg – auf einem Mac / Linux / Windows Rechner:</p>
   <p><code>iperf3 -s</code></p>
   <p>Geben Sie dann die IP-Adresse dieses Rechners in die App ein und tippen Sie auf <em>Start Speed Test</em>.</p>
-  <p>Wenn Sie keinen eigenen Server haben, gibt es öffentliche iPerf3-Server – ein Verzeichnis finden Sie unter <a href="https://iperf3serverlist.net" target="_blank" rel="noopener">iperf3serverlist.net</a>.</p>
+  <p>Wenn Sie keinen eigenen Server haben, finden Sie öffentliche Server unter <a href="https://iperf3serverlist.net" target="_blank" rel="noopener">iperf3serverlist.net</a>.</p>
 
-  <h3>Häufig gestellte Fragen (FAQ)</h3>
-  <p><strong>Warum ist mein Ergebnis niedriger als meine beworbene Internetgeschwindigkeit?</strong><br>
-  iPerf misst die Verbindung zwischen Ihrem Gerät und dem von Ihnen gewählten Server. Wenn Ihr Server Ihr Router oder ein lokaler Rechner ist, spiegelt das Ergebnis Ihr WLAN / LAN wider – nicht Ihre ISP-Verbindung. Das ist der Zweck dieses Tools.</p>
+  <h3>FAQ</h3>
+  <p><strong>Warum ist mein Ergebnis niedriger als meine Internetgeschwindigkeit?</strong><br>
+  iPerf misst die Verbindung zu Ihrem gewählten Server. Wenn Ihr Server lokal ist, spiegelt das Ergebnis Ihr lokales Netzwerk wider – nicht Ihre ISP-Verbindung.</p>
 
-  <p><strong>Funktioniert es über das Mobilfunknetz?</strong><br>
-  Ja, solange der iPerf3-Server von Ihrem Gerät aus erreichbar ist.</p>
-
-  <p><strong>Warum schlägt die Verbindung beim Test fehl?</strong><br>
-  Am häufigsten: Der Server läuft nicht, eine Firewall blockiert Port 5201, oder die IP ist falsch. Überprüfen Sie dies zuerst mit <code>iperf3 -c &lt;ip&gt;</code> von einem anderen Rechner aus.</p>
+  <p><strong>Warum schlägt die Verbindung fehl?</strong><br>
+  Meistens: Der Server läuft nicht, eine Firewall blockiert Port 5201, oder die IP ist falsch. Testen Sie es zuerst mit <code>iperf3 -c &lt;ip&gt;</code> von einem anderen Rechner.</p>
 
   <h3>Kontakt</h3>
   <p>Fehlerberichte oder Fragen: <a href="mailto:j.vreitzenstein@gmail.com">j.vreitzenstein@gmail.com</a></p>
